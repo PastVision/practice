@@ -41,10 +41,7 @@ class Building:
             low += step
         return 'extinct', 'extinct'
 
-
-
-'''
-    def find_threshold(self):  # BINSEARCH
+    def __find_threshold(self):  # BINSEARCH
         lb = 1
         ub = self.floors
         while lb < ub:
@@ -55,7 +52,7 @@ class Building:
             elif egg_status == 'dead':
                 ub = mid
         return lb, self.egg.drop_count
-'''
+
 
 if __name__ == '__main__':
     floor_count = int(input('Num floors: '))
