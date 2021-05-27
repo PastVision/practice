@@ -16,9 +16,35 @@ class Egg:
 class Building:
     def __init__(self, floors: int, egg: Egg) -> None:
         self.floors = floors
+        self.step_size = self.__calc_step_size()
+        print(self.step_size)
         self.egg = egg
 
-    def find_thresold(self):
+    def __calc_step_size(self):
+        a = 0
+        n = self.floors
+        while n > 0:
+            n -= a
+            a += 1
+        return a-1
+
+    def find_threshold(self):
+        low = 1
+        step = 0
+        for i in range(self.step_size):
+            step += self.step_size - i
+            if self.egg.drop_test(step) == 'dead':
+                for floor in range(low, step):
+                    if self.egg.drop_test(floor) == 'dead':
+                        return floor, self.egg.drop_count
+                return step, self.egg.drop_count
+            low += step
+        return 'extinct', 'extinct'
+
+
+
+'''
+    def find_threshold(self):  # BINSEARCH
         lb = 1
         ub = self.floors
         while lb < ub:
@@ -29,7 +55,7 @@ class Building:
             elif egg_status == 'dead':
                 ub = mid
         return lb, self.egg.drop_count
-
+'''
 
 if __name__ == '__main__':
     floor_count = int(input('Num floors: '))
@@ -38,5 +64,5 @@ if __name__ == '__main__':
         print('Error! BreakThreshold > FloorCount')
         exit(1)
     building = Building(floor_count, Egg(break_threshold))
-    threshold, drops = building.find_thresold()
+    threshold, drops = building.find_threshold()
     print(f'Break Threshold of {threshold} found in {drops} drops.')
