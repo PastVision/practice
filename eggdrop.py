@@ -17,7 +17,7 @@ class Building:
     def __init__(self, floors: int, egg: Egg) -> None:
         self.floors = floors
         self.step_size = self.__calc_step_size()
-        print(self.step_size)
+        # print(self.step_size)
         self.egg = egg
 
     def __calc_step_size(self):
